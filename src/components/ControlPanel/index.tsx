@@ -9,6 +9,7 @@ import { useDebounce } from '../../hooks/useDebounce';
 export function ControlPanel() {
   const {
     text,
+    inputText,
     font,
     errorRate,
     ghostIntensity,
@@ -17,11 +18,12 @@ export function ControlPanel() {
     paperAge,
     updateSetting,
     resetSettings,
+    setInputText,
   } = useSettingsStore();
 
-  const [localText, setLocalText] = useState(text);
+  const [localText, setLocalText] = useState(inputText);
   const debouncedText = useDebounce(localText, 300);
-  const prevTextRef = useRef(text);
+  const prevInputTextRef = useRef(inputText);
 
   useEffect(() => {
     if (debouncedText !== text) {
@@ -30,15 +32,20 @@ export function ControlPanel() {
   }, [debouncedText, text, updateSetting]);
 
   useEffect(() => {
-    if (text !== prevTextRef.current && text !== localText) {
-      setLocalText(text);
+    if (inputText !== prevInputTextRef.current && inputText !== localText) {
+      setLocalText(inputText);
     }
-    prevTextRef.current = text;
-  }, [text, localText]);
+    prevInputTextRef.current = inputText;
+  }, [inputText, localText]);
+
+  const handleTextChange = (value: string) => {
+    setLocalText(value);
+    setInputText(value);
+  };
 
   const handleReset = () => {
     resetSettings();
-    setLocalText(useSettingsStore.getState().text);
+    setLocalText(useSettingsStore.getState().inputText);
   };
 
   const sliders = [
@@ -99,7 +106,7 @@ export function ControlPanel() {
           </label>
           <textarea
             value={localText}
-            onChange={(e) => setLocalText(e.target.value)}
+            onChange={(e) => handleTextChange(e.target.value)}
             className="w-full h-32 px-4 py-3 bg-paper border-2 border-ink/30 rounded-lg
                        focus:outline-none focus:ring-2 focus:ring-accent-red/50 focus:border-accent-red
                        resize-none text-ink placeholder-ink/30 transition-colors"

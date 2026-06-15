@@ -42,7 +42,7 @@ export function DraftBox() {
   }, [loadDrafts]);
 
   const currentSettings: EffectSettings = {
-    text: settings.text,
+    text: settings.inputText,
     font: settings.font,
     fontSize: settings.fontSize,
     errorRate: settings.errorRate,
