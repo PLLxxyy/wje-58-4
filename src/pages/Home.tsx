@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import { ControlPanel } from '../components/ControlPanel';
+import { DraftBox } from '../components/ControlPanel/DraftBox';
 import Preview from '../components/Preview';
 import ExportButtons from '../components/Export/ExportButtons';
 
@@ -21,8 +22,9 @@ export default function Home() {
 
       <main className="max-w-7xl mx-auto p-4 md:p-6">
         <div className="flex flex-col lg:flex-row gap-6">
-          <aside className="w-full lg:w-96 flex-shrink-0">
+          <aside className="w-full lg:w-96 flex-shrink-0 space-y-4">
             <ControlPanel />
+            <DraftBox />
           </aside>
 
           <section className="flex-1 flex flex-col gap-4">

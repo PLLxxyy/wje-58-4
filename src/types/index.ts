@@ -34,3 +34,11 @@ export interface InkSpot {
   opacity: number;
   type: 'dot' | 'smudge' | 'feather';
 }
+
+export interface Draft {
+  id: string;
+  name: string;
+  settings: EffectSettings;
+  createdAt: number;
+  updatedAt: number;
+}

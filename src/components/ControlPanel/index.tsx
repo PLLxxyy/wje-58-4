@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { AlertCircle, Layers, Droplets, Move, Clock, RotateCcw, Type } from 'lucide-react';
 import { Slider } from './Slider';
 import { FontSelector } from './FontSelector';
@@ -21,12 +21,20 @@ export function ControlPanel() {
 
   const [localText, setLocalText] = useState(text);
   const debouncedText = useDebounce(localText, 300);
+  const prevTextRef = useRef(text);
 
   useEffect(() => {
     if (debouncedText !== text) {
       updateSetting('text', debouncedText);
     }
   }, [debouncedText, text, updateSetting]);
+
+  useEffect(() => {
+    if (text !== prevTextRef.current && text !== localText) {
+      setLocalText(text);
+    }
+    prevTextRef.current = text;
+  }, [text, localText]);
 
   const handleReset = () => {
     resetSettings();
